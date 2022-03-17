@@ -2,9 +2,9 @@ const { Router, response } = require("express");
 const Images = require("../models").images;
 const { toJWT, toData } = require("../auth/jwt");
 const router = new Router();
+const middleware = require('../auth/middleware')
 
-
-
+// get by id
 router.get("/:id", async (request, response, next) => {
   try {
     const id = request.params.id;
@@ -23,7 +23,7 @@ router.get("/:id", async (request, response, next) => {
 });
 
 
-
+//get by post
 router.post("/", async (req, res, next) => {
   try {
     const { title, url } = req.body;
@@ -61,9 +61,15 @@ router.get("/auth/messy", async (req, res, next) => {
   }
 });
 
-
-
-
+//using midware
+router.get("/", middleware, async (req, res, next) => {
+  try {
+    const allImg = await Images.findAll();
+    res.json(allImg);
+  } catch (e) {
+    next(e);
+  }
+});
 
 
 

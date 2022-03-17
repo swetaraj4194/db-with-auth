@@ -13,5 +13,6 @@ app.use(jsonParser);
 app.use("/auth",authRouter);
 app.use("/users", userRouter);
 app.use("/images", imageRouter);
+//app.use("/images", authMiddleware, imageRouter);
 
 app.listen(PORT, () => console.log(`listning on ${PORT}`));
